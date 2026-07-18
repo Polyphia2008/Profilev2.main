@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "owner": "Polyphia2008",
+  "repo": "Profilev2.main",
+  "site": {
+    "title": "Trang cá nhân",
+    "background": {
+      "type": "gradient",
+      "value": "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%)"
+    },
+    "avatar": "",
+    "displayName": "",
+    "tagline": "",
+    "accentColor": "#22c55e",
+    "glassEffect": true
+  },
+  "events": []
+}
