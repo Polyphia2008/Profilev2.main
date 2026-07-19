@@ -4,5 +4,6 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/Profilev2.main/',
+  // base: '/Profilev2.main/'  // chỉ dùng cho GitHub Pages với subpath
+  base: '/',
 })
