@@ -1,0 +1,33 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build-job:
+  stage: build
+  image: node:14
+  script:
+    - npm install # Cài đặt dependencies
+    - npm run build # Biên dịch ứng dụng
+
+unit-test-job:
+  stage: test
+  image: node:14
+  script:
+    - npm install # Cài đặt dependencies
+    - npm run test # Chạy các test unit
+
+lint-test-job:
+  stage: test
+  image: node:14
+  script:
+    - npm install # Cài đặt dependencies
+    - npm run lint # Kiểm tra mã nguồn với linter
+
+deploy-job:
+  stage: deploy
+  environment: production
+  image: node:14
+  script:
+    - npm install -g serve # Cài đặt serve để chạy ứng dụng React
+    - serve -s build # Phục vụ ứng dụng đã được biên dịch

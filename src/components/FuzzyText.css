@@ -1,0 +1,19 @@
+.fuzzy-wrap {
+  display: inline-block;
+  line-height: 1;
+  transform-origin: center;
+}
+.fuzzy-text {
+  display: inline-block;
+  background: linear-gradient(90deg, #22c55e, #06b6d4, #8b5cf6, #ec4899, #22c55e);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fuzz-gradient 8s linear infinite;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 40px rgba(34,197,94,0.3);
+}
+@keyframes fuzz-gradient {
+  to { background-position: 300% 0; }
+}

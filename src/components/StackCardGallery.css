@@ -1,0 +1,78 @@
+.gallery-section {
+  max-width: 672px;
+  margin: 24px auto;
+  padding: 0 16px;
+  position: relative;
+  z-index: 1;
+}
+.gallery-title {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+.gallery-sub {
+  margin: 0 0 16px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.gallery-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 10px;
+}
+.stack-container {
+  position: relative;
+  width: 240px;
+  height: 300px;
+  perspective: 1000px;
+}
+.stack-card-handle {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+}
+.stack-card-disabled { position: absolute; inset: 0; cursor: pointer; }
+.stack-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #1e293b;
+  box-shadow:
+    0 20px 40px -15px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(255,255,255,0.1) inset;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: box-shadow 0.2s;
+}
+.stack-card:hover {
+  box-shadow:
+    0 25px 50px -10px rgba(34,197,94,0.25),
+    0 0 0 1px rgba(34,197,94,0.4) inset;
+}
+.stack-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  display: block;
+}
+.stack-card-cap {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 10px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .stack-container { width: 200px; height: 260px; }
+}
