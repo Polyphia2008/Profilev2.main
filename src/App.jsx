@@ -8,17 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.css";
 import Box from "@mui/material/Box";
 import LatestNews from "./LatestNews";
-import MusicPlayer from "./MusicPlayer";
-import AuroraBackground from "./components/AuroraBackground";
-import TargetCursor from "./components/TargetCursor";
-import DecryptedText from "./components/DecryptedText";
-import ElectricBorder from "./components/ElectricBorder";
-import StackCardGallery from "./components/StackCardGallery";
-import NotFound from "./components/NotFound";
-import PageEffects from "./components/PageEffects";
 import Modal from "@mui/material/Modal";
-import { GALLERY_IMAGES } from "./gallery.js";
 import { format } from "date-fns";
+import MusicPlayer from "./MusicPlayer.jsx";
 function App() {
   const style = {
     position: "absolute",
@@ -33,28 +25,6 @@ function App() {
     px: 4,
     pb: 3,
   };
-
-  // hash-based 404
-  const [route, setRoute] = useState(window.location.hash.replace(/^#/, "") || "/");
-  useEffect(() => {
-    const onHash = () => setRoute(window.location.hash.replace(/^#/, "") || "/");
-    window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
-  }, []);
-  const KNOWN_ROUTES = ["/", "#", "", "/admin"]; // admin removed but keep whitelist
-  const path = route.replace(/^\//, "");
-  const is404 = !KNOWN_ROUTES.includes("/" + path) && !KNOWN_ROUTES.includes(path) && path !== "";
-
-  if (is404) {
-    return (
-      <>
-        <AuroraBackground />
-        <NotFound onHome={() => { window.location.hash = ""; }} />
-        <TargetCursor cursorColor="#ffffff" cursorColorOnTarget="#22c55e" />
-      </>
-    );
-  }
-
 
   const [open, setOpen] = useState(0);
   const handleOpen = (index) => setOpen(index);
@@ -170,16 +140,7 @@ function App() {
               </i>
             </h1>
             <h2 className="text-balance text-center text-slate-400">
-              <DecryptedText
-                text={userInfo[0]["info"]}
-                animateOn="view"
-                sequential
-                revealDirection="start"
-                speed={30}
-                maxIterations={18}
-                className="decrypted-h2"
-                encryptedClassName="decrypted-enc"
-              />
+              {userInfo[0]["info"]}
             </h2>
           </div>
           <section className="space-y-4 rounded-xl border border-slate-700 bg-slate-800 p-4">
@@ -313,87 +274,87 @@ function App() {
 </section>
           <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {secctionCopy.map((item, index) => (
-              <ElectricBorder
+              <div
                 key={index}
-                color="#22c55e"
-                speed={1.2}
-                chaos={0.1}
-                thickness={1.5}
-                borderRadius={14}
+                role="link"
+                tabIndex={0}
+                className="flex cursor-pointer items-center space-x-4 rounded-xl p-4 border border-slate-700 bg-slate-800 transition-all hover:border-blue-500 select-none"
               >
-                <div
-                  role="link"
-                  tabIndex={0}
-                  className="flex cursor-pointer items-center space-x-4 rounded-xl p-4 transition-all select-none electric-card"
+                <img
+                  loading="lazy"
+                  width={48}
+                  height={48}
+                  decoding="async"
+                  data-nimg={1}
+                  className="rounded-xl shadow-md"
+                  style={{ color: "transparent" }}
+                  src={item.image}
+                  alt={item.title}
+                />
+
+                <a className="flex-1" href={item.link}>
+                  <h3 className="font-semibold">{item.title}</h3>
+                  <p className="text-slate-400">{item.name}</p>
+                </a>
+
+                <button
+                  aria-label="Copy"
+                  onClick={() => copyToClipboard(item.link)}
+                  className="text-slate-500 transition-all hover:text-slate-400"
                 >
-                  <img
-                    loading="lazy"
-                    width={48}
-                    height={48}
-                    decoding="async"
-                    data-nimg={1}
-                    className="rounded-xl shadow-md"
-                    style={{ color: "transparent" }}
-                    src={item.image}
-                    alt={item.title}
-                  />
-                  <a className="flex-1" href={item.link}>
-                    <h3 className="font-semibold">{item.title}</h3>
-                    <p className="text-slate-400">{item.name}</p>
-                  </a>
-                  <button
-                    aria-label="Copy"
-                    onClick={() => copyToClipboard(item.link)}
-                    className="text-slate-500 transition-all hover:text-slate-400"
+                  <svg
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path opacity="0.4" d="M15.5 13.15H13.33C11.55 13.15 10.1 11.71 10.1 9.92V7.75C10.1 7.34 9.77 7 9.35 7H6.18C3.87 7 2 8.5 2 11.18V17.82C2 20.5 3.87 22 6.18 22H12.07C14.38 22 16.25 20.5 16.25 17.82V13.9C16.25 13.48 15.91 13.15 15.5 13.15Z" fill="currentColor"/>
-                      <path d="M17.82 2H15.85H14.76H11.93C9.67 2 7.84 3.44 7.76 6.01C7.82 6.01 7.87 6 7.93 6H10.76H11.85H13.82C16.13 6 18 7.5 18 10.18V12.15V14.86V16.83C18 16.89 17.99 16.94 17.99 16.99C20.22 16.92 22 15.44 22 12.83V10.86V8.15V6.18C22 3.5 20.13 2 17.82 2Z" fill="currentColor"/>
-                      <path d="M11.98 7.15C11.67 6.84 11.14 7.05 11.14 7.48V10.1C11.14 11.2 12.07 12.1 13.21 12.1C13.92 12.11 14.91 12.11 15.76 12.11C16.19 12.11 16.41 11.61 16.11 11.31C15.02 10.22 13.08 8.27 11.98 7.15Z" fill="currentColor"/>
-                    </svg>
-                  </button>
-                </div>
-              </ElectricBorder>
+                    <path
+                      opacity="0.4"
+                      d="M15.5 13.15H13.33C11.55 13.15 10.1 11.71 10.1 9.92V7.75C10.1 7.34 9.77 7 9.35 7H6.18C3.87 7 2 8.5 2 11.18V17.82C2 20.5 3.87 22 6.18 22H12.07C14.38 22 16.25 20.5 16.25 17.82V13.9C16.25 13.48 15.91 13.15 15.5 13.15Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M17.82 2H15.85H14.76H11.93C9.67001 2 7.84001 3.44 7.76001 6.01C7.82001 6.01 7.87001 6 7.93001 6H10.76H11.85H13.82C16.13 6 18 7.5 18 10.18V12.15V14.86V16.83C18 16.89 17.99 16.94 17.99 16.99C20.22 16.92 22 15.44 22 12.83V10.86V8.15V6.18C22 3.5 20.13 2 17.82 2Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M11.98 7.15C11.67 6.84 11.14 7.05 11.14 7.48V10.1C11.14 11.2 12.07 12.1 13.21 12.1C13.92 12.11 14.91 12.11 15.76 12.11C16.19 12.11 16.41 11.61 16.11 11.31C15.02 10.22 13.08 8.27 11.98 7.15Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </button>
+              </div>
             ))}
             {modalssss.map((item, index) => (
-              <ElectricBorder
-                key={"q-" + index}
-                color="#06b6d4"
-                speed={1.0}
-                chaos={0.08}
-                thickness={1.5}
-                borderRadius={14}
+              <div
+                key={index}
+                onClick={() => handleOpen(index + 1)}
+                id="myElement"
+                role="link"
+                className="flex cursor-pointer items-center space-x-4 rounded-xl p-4 border border-slate-700 bg-slate-800 transition-all hover:border-blue-500 select-none"
               >
-                <div
-                  onClick={() => handleOpen(index + 1)}
-                  id="myElement"
-                  role="link"
-                  className="flex cursor-pointer items-center space-x-4 rounded-xl p-4 transition-all select-none electric-card"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    loading="lazy"
-                    width={48}
-                    height={48}
-                    decoding="async"
-                    data-nimg={1}
-                    className="rounded-xl shadow-md"
-                    style={{ color: "transparent" }}
-                  />
-                  <div className="flex-1">
-                    <h3 className="font-semibold">{item.title}</h3>
-                    <p className="text-slate-400">{item.name}</p>
-                  </div>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  loading="lazy"
+                  width={48}
+                  height={48}
+                  decoding="async"
+                  data-nimg={1}
+                  className="rounded-xl shadow-md"
+                  style={{ color: "transparent" }}
+                />
+                <div className="flex-1">
+                  <h3 className="font-semibold">{item.title}</h3>
+                  <p className="text-slate-400">{item.name}</p>
                 </div>
-              </ElectricBorder>
+              </div>
             ))}
             <div className="App">
               <LatestNews />
             </div>
           </section>
-          {/* Gallery */}
-          <StackCardGallery cards={GALLERY_IMAGES} title="📸 Gallery" />
           <div className="sticky bottom-1 z-10 grid grid-cols-2 gap-2 rounded-xl p-2 border border-slate-700 bg-slate-800/80 backdrop-blur-md shadow-[0_0_8px_4px_rgba(0,0,0,0.25)]">
             <button
               type="button"
@@ -616,11 +577,7 @@ function App() {
           </Box>
         </Modal>
       ))}
-
-      <AuroraBackground />
       <MusicPlayer />
-      <TargetCursor cursorColor="#ffffff" cursorColorOnTarget="#22c55e" spinDuration={3} parallaxOn />
-      <PageEffects />
     </>
   );
 }
